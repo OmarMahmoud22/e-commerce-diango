@@ -67,7 +67,7 @@
 	{% if pro.stock <= 0 %}
 	<b class="text-danger"> out of stock </b>
 	{% else %}
-	<a href="./product-detail.html" class="btn  btn-primary"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>  </a>
+	<a href="{% url "add_cart" pro.id %}" class="btn  btn-primary"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>  </a>
 	{% endif %}
 </article> <!-- product-info-aside .// -->
 		</main> <!-- col.// -->
