@@ -2,7 +2,7 @@
 {% block content  %}
 <body>
 
-\
+
 
 
 
@@ -136,7 +136,7 @@
 		<figure class="card card-product-grid">
 			<div class="img-wrap"> 
 				
-				<img src="{{x.image.url}}">
+				<a href="{{ x.get_url  }}"><img src="{{x.image.url}}"></a>
 				
 			</div> <!-- img-wrap.// -->
 			<figcaption class="info-wrap">
@@ -147,7 +147,7 @@
 						
 					</div> <!-- price-wrap.// -->
 				</div>
-				<a href="#" class="btn btn-block btn-primary">Add to cart </a>
+				<a href="{% url "cart:add_cart" x.id %}" class="btn btn-block btn-primary">Add to cart </a>
 			</figcaption>
 		</figure>
 		

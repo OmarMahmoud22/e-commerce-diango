@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
 
 
@@ -6,7 +7,9 @@
 <div class="container">
 
 <!-- ============================ COMPONENT 1 ================================= -->
-
+{% if not cart_items %}
+<h2>your shopping cart is empty</h2>
+{% else %}
 <div class="row">
 	<aside class="col-lg-9">
 <div class="card">
@@ -26,7 +29,7 @@
 		<figure class="itemside align-items-center">
 			<div class="aside"><img src="{{x.product.image.url}}" class="img-sm"></div>
 			<figcaption class="info">
-				<a href="#" class="title text-dark">{{x.product.name}}</a>
+				<a href="{{x.product.get_url}}" class="title text-dark">{{x.product.name}}</a>
 				<p class="text-muted small">Matrix: 25 Mpx <br> Brand: Canon</p>
 			</figcaption>
 		</figure>
@@ -36,11 +39,11 @@
 					<div class="col"> 
 						<div class="input-group input-spinner">
 							<div class="input-group-prepend">
-							<button class="btn btn-light" type="button" id="button-plus"> <i class="fa fa-minus"></i> </button>
+							<a href= "{% url "cart:mainus" x.product.id %}"class="btn btn-light" type="button" id="button-plus"> <i class="fa fa-minus"></i> </a>
 							</div>
 							<input type="text" class="form-control"  value="{{x.quantity}}">
 							<div class="input-group-append">
-							<a href ="{% url "add_cart" x.product.id %}"class="btn btn-light" id="button-minus"> <i class="fa fa-plus"></i> </a>
+							<a href ="{% url "cart:add_cart" x.product.id %}"class="btn btn-light" id="button-minus"> <i class="fa fa-plus"></i> </a>
 							</div>
 						</div> <!-- input-group.// -->
 					</div> <!-- col.// -->
@@ -53,7 +56,7 @@
 		</div> <!-- price-wrap .// -->
 	</td>
 	<td class="text-right"> 
-		<a href="" class="btn btn-danger"> Remove</a>
+		<a href="{% url "cart:remove_item" x.product.id %}" class="btn btn-danger"> Remove</a>
 	</td>
 </tr>
 
@@ -73,18 +76,20 @@
 			</dl>
 			<dl class="dlist-align">
 			  <dt>Tax:</dt>
-			  <dd class="text-right"> $10.00</dd>
+			  <dd class="text-right"> ${{tax}}</dd>
 			</dl>
 			<dl class="dlist-align">
 			  <dt>Total:</dt>
-			  <dd class="text-right text-dark b"><strong>$59.97</strong></dd>
+			  <dd class="text-right text-dark b"><strong>${{grand_total}}</strong></dd>
 			</dl>
 			<hr>
 			<p class="text-center mb-3">
-				<img src="./images/misc/payments.png" height="26">
+				<img src="{% static "./images/misc/payments.png" %}" height="26">
 			</p>
+		
 			<a href="./place-order.html" class="btn btn-primary btn-block"> Checkout </a>
-			<a href="./store.html" class="btn btn-light btn-block">Continue Shopping</a>
+			{% endif %}
+			<a href="{% url "home" %}" class="btn btn-outline-primary btn-block">Continue Shopping</a>
 		</div> <!-- card-body.// -->
 		</div> <!-- card.// -->
 </aside> <!-- col.// -->
@@ -98,4 +103,5 @@
 <!-- ========================= SECTION CONTENT END// ========================= -->
 </body>
 </html>
+
 {% endblock content %}

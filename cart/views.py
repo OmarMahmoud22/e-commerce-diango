@@ -24,7 +24,7 @@ def add_cart(request, product_id):
     # Save the cart item
     cart_item.save()
 
-    return redirect('cart_details')
+    return redirect('cart:cart_details')
 
 
 
@@ -40,6 +40,8 @@ def cart(request, total=0, quantity=0):
         for item in cart_items:
             total += item.product.price * item.quantity
             quantity += item.quantity
+        tax = (2 * total)    /100
+        grand_total = tax + total
     except Cart.DoesNotExist:
         # If no cart exists, set cart_items to an empty queryset
         cart_items = []
@@ -49,6 +51,38 @@ def cart(request, total=0, quantity=0):
         'total': total,
         'quantity': quantity,
         'cart_items': cart_items,
+        'grand_total' : grand_total,
+        'tax' : tax
     }
 
     return render(request, 'store_html/cart.html', context)
+
+
+def remove_cart_item(request, product_id):
+    cart = get_object_or_404(Cart, cart_id=cart_id_(request))
+    pro = get_object_or_404(Product, id=product_id)
+
+    try:
+        item = Cart_Item.objects.get(product=pro, cart=cart)
+        item.delete()
+    except Cart_Item.DoesNotExist:
+        print("Cart_Item does not exist.")
+    
+    return redirect('cart_details')
+
+
+def mainus(request, product_id):
+    cart = get_object_or_404(Cart, cart_id=cart_id_(request))
+    pro = get_object_or_404(Product, id=product_id)
+    
+    try:
+        item = Cart_Item.objects.get(product=pro, cart=cart)
+        if item.quantity > 1:
+            item.quantity -= 1
+            item.save()
+        else:
+            item.delete()
+    except Cart_Item.DoesNotExist:
+        print("No matching Cart_Item found.")
+    
+    return redirect('cart:cart_details')
