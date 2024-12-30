@@ -30,7 +30,11 @@
 			<div class="aside"><img src="{{x.product.image.url}}" class="img-sm"></div>
 			<figcaption class="info">
 				<a href="{{x.product.get_url}}" class="title text-dark">{{x.product.name}}</a>
-				<p class="text-muted small">Matrix: 25 Mpx <br> Brand: Canon</p>
+				{% if x.varitations.all %}
+				{% for item in x.varitations.all %}
+				{{item.variation_category|capfirst}} : {{item.variation_value|lower}}
+				{% endfor %}
+				{% endif %}
 			</figcaption>
 		</figure>
 	</td>
@@ -38,25 +42,33 @@
 		<!-- col.// -->
 					<div class="col"> 
 						<div class="input-group input-spinner">
-							<div class="input-group-prepend">
-							<a href= "{% url "cart:mainus" x.product.id %}"class="btn btn-light" type="button" id="button-plus"> <i class="fa fa-minus"></i> </a>
-							</div>
-							<input type="text" class="form-control"  value="{{x.quantity}}">
-							<div class="input-group-append">
-							<a href ="{% url "cart:add_cart" x.product.id %}"class="btn btn-light" id="button-minus"> <i class="fa fa-plus"></i> </a>
-							</div>
+<div class="input-group-prepend">
+<a href= "{% url "cart:mainus" x.product.id x.id%}"class="btn btn-light" type="button" id="button-plus"> <i class="fa fa-minus"></i> </a>
+</div>
+<input type="text" class="form-control"  value="{{x.quantity}}">
+<div class="input-group-append">
+<form action="{% url "cart:add_cart" x.product.id %}" method='post'>
+	{% csrf_token %}
+	{% for item in x.varitations.all %}
+	<input type="hidden" name = "{{item.variation_category | capfirst}}" value="{{item.variation_value | lower}}">
+	{% endfor %}
+<button class="btn btn-light" id="button-minus"> <i class="fa fa-plus"></i> </button>
+</form>
+</div>
+							
 						</div> <!-- input-group.// -->
+						
 					</div> <!-- col.// -->
 	</td>
 	
 	<td> 
 		<div class="price-wrap"> 
 			<var class="price">${{x.suptotal}}</var> 
-			<small class="text-muted"> $578.00 each</small> 
+
 		</div> <!-- price-wrap .// -->
 	</td>
 	<td class="text-right"> 
-		<a href="{% url "cart:remove_item" x.product.id %}" class="btn btn-danger"> Remove</a>
+		<a href="{% url "cart:remove_item" x.product.id x.id %}" class="btn btn-danger"> Remove</a>
 	</td>
 </tr>
 
