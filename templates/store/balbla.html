@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+
+<section class="section-content padding-y bg">
+<div class="container">
+
+<!-- ============================ COMPONENT 1 ================================= -->
+{% if not cart_items %}
+<h2>your shopping cart is empty</h2>
+{% else %}
+<div class="row">
+	<aside class="col-lg-9">
+<div class="card">
+<table class="table table-borderless table-shopping-cart">
+<thead class="text-muted">
+<tr class="small text-uppercase">
+  <th scope="col">Product</th>
+  <th scope="col" width="120">Quantity</th>
+  <th scope="col" width="120">Price</th>
+  <th scope="col" class="text-right" width="200"> </th>
+</tr>
+</thead>
+<tbody>
+
+<tr>
+	<td>
+        <div class="card mx-auto" style="max-width: 380px; margin-top:100px;">
+            <div class="card-body">
+            <h4 class="card-title mb-4">Get information</h4>
+        <form action={% url "login" %} method='POST'>
+            {% csrf_token %}
+              <div class="form-group">
+                 <input type="email" class="form-control" placeholder="Email Address" name="email" >
+              </div> <!-- form-group// -->
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="first_name" name="first_name" >
+             </div> <!-- form-group// -->
+             <div class="form-group">
+                <input type="text" class="form-control" placeholder="last_name" name="last_name" >
+             </div> <!-- form-group// -->
+             <div class="form-group">
+                <input type="text" class="form-control" placeholder="Phone_number" name="Phone_number" >
+             </div> <!-- form-group// -->
+             <div class="form-group">
+                <input type="text" class="form-control" placeholder="city" name="city" >
+             </div> <!-- form-group// -->
+             <div class="form-group">
+                <input type="text" class="form-control" placeholder="address" name="address" >
+             </div> <!-- form-group// -->
+            </form>
+        </div>
+        </div>
+	</td>
+	
+	
+	
+	
+</tr>
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+
+</tbody>
+</table>
+</div> <!-- card.// -->
+
+	</aside> <!-- col.// -->
+	<aside class="col-lg-3">
+
+        <a href="{% url "cart:check_out" %}" class="btn btn-primary btn-block"> Checkout </a>
+      
+        <a href="{% url "home" %}" class="btn btn-outline-primary btn-block">Continue Shopping</a>
+		</div> <!-- card-body.// -->
+		</div> <!-- card.// -->
+</aside> <!-- col.// -->
+
+
+</div> <!-- row.// -->
+<!-- ============================ COMPONENT 1 END .// ================================= -->
+
+</div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+</body>
+</html>
+
+{% endblock content %}

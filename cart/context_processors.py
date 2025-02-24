@@ -11,7 +11,10 @@ def get_quntity(request):
     else:
         try:
             cart = Cart.objects.filter(cart_id=cart_id_(request))
-            cart_item = Cart_Item.objects.all().filter(cart=cart[:1])
+            if request.user.is_authenticated:
+                cart_item = Cart_Item.objects.all().filter(user=request.user)
+            else:
+                cart_item = Cart_Item.objects.all().filter(cart=cart[:1])
             for car in cart_item:
                 cart_count +=car.quantity
         except Cart.DoesNotExist:

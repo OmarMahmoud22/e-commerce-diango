@@ -42,19 +42,19 @@
 		<!-- col.// -->
 					<div class="col"> 
 						<div class="input-group input-spinner">
-<div class="input-group-prepend">
-<a href= "{% url "cart:mainus" x.product.id x.id%}"class="btn btn-light" type="button" id="button-plus"> <i class="fa fa-minus"></i> </a>
-</div>
-<input type="text" class="form-control"  value="{{x.quantity}}">
-<div class="input-group-append">
-<form action="{% url "cart:add_cart" x.product.id %}" method='post'>
-	{% csrf_token %}
-	{% for item in x.varitations.all %}
-	<input type="hidden" name = "{{item.variation_category | capfirst}}" value="{{item.variation_value | lower}}">
-	{% endfor %}
-<button class="btn btn-light" id="button-minus"> <i class="fa fa-plus"></i> </button>
-</form>
-</div>
+				<div class="input-group-prepend">
+					<a href= "{% url "cart:mainus" x.product.id x.id%}"class="btn btn-light" type="button" id="button-plus"> <i class="fa fa-minus"></i> </a>
+				</div>
+					<input type="text" class="form-control"  value="{{x.quantity}}">
+		<div class="input-group-append">
+			<form action="{% url "cart:add_cart" x.product.id %}" method='post'>
+				{% csrf_token %}
+					{% for item in x.varitations.all %}
+						<input type="hidden" name = "{{item.variation_category | capfirst}}" value="{{item.variation_value | lower}}">
+					{% endfor %}
+						<button class="btn btn-light" id="button-minus"> <i class="fa fa-plus"></i> </button>
+			</form>
+		</div>
 							
 						</div> <!-- input-group.// -->
 						
@@ -71,6 +71,13 @@
 		<a href="{% url "cart:remove_item" x.product.id x.id %}" class="btn btn-danger"> Remove</a>
 	</td>
 </tr>
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
 
 {% endfor %}
 </tbody>
@@ -99,7 +106,7 @@
 				<img src="{% static "./images/misc/payments.png" %}" height="26">
 			</p>
 		
-			<a href="./place-order.html" class="btn btn-primary btn-block"> Checkout </a>
+			<a href="{% url "cart:check_out" %}" class="btn btn-primary btn-block"> Checkout </a>
 			{% endif %}
 			<a href="{% url "home" %}" class="btn btn-outline-primary btn-block">Continue Shopping</a>
 		</div> <!-- card-body.// -->

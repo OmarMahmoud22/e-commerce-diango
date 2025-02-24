@@ -30,7 +30,7 @@
 	<div class="row">
 		<div class="item-option-select">
 			<div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
-			{% if pro.category.name == 'shert' or pro.category.name == 'shoes' %}
+			
 			<h6>Choose Size</h6>
 		
 			<select name="size" id="colors" required class='form-control'>
@@ -52,21 +52,10 @@
 		
 		
 		
-		{% else %}
-		<h6>Choose Color</h6>
-			<div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
 		
-				
-				<select name="color" id="color" required class='form-control'>
-					{% for item in pro.var.colors  %}
-					<option value="{{item.variation_value | lower}}">{{item.variation_value | capfirst}}</option>
-					{% endfor %}				
-				</select>
-			</div>	
-			{% endif %}
 			
 			
-
+<p>{{pro.stock}}</p>
 	 <!-- row.// -->
 	<hr>
 	{% if pro.stock <= 0 %}

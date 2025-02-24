@@ -44,7 +44,9 @@ class Product(models.Model):
     
 
 
-
+## Manager، فستضطر إلى كتابة استعلامات منفصلة مثل هذه كل مرة:
+#active_colors = Variation.objects.filter(variation_category='color', is_active=True)
+#active_sizes = Variation.objects.filter(variation_category='size', is_active=True)
 class VariationManager(models.Manager):
     def colors(self):
         return super().filter(variation_category='color', is_active=True)

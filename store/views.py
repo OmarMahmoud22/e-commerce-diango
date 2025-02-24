@@ -32,7 +32,7 @@ def home(request , cat_slug=None):
         'product_count' : product_count
 
         }
-    return render(request , 'store_html/home.html' , context)
+    return render(request , 'store/home.html' , context)
 
 
 def product_detail(request, cat_slug, slug_product):
@@ -46,7 +46,7 @@ def product_detail(request, cat_slug, slug_product):
         'pro' : pro,
         'in_cart' : in_cart
     }
-    return render(request, 'store_html/product-detail.html' , context   )
+    return render(request, 'store/product-detail.html' , context   )
 
 def search(request):
     keyword = request.GET.get('keyword', '')  # Get 'keyword' from the request, default to an empty string
@@ -61,6 +61,6 @@ def search(request):
             'products' : products,
             'product_count' : product_count
     }    
-    return render(request , 'store_html/home.html' , context)
+    return render(request , 'store/home.html' , context)
 
 

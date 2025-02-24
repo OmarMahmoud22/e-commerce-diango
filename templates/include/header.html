@@ -29,6 +29,8 @@
 <script src="{% static 'js/script.js'%}" type="text/javascript"></script>
 
 <script type="{% static 'text/javascript' %}">
+<script src="https://www.paypal.com/sdk/js?client-id=CLMEJD2P62WZS&currency=USD"></script>    
+<script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
 /// some script
 
 // jquery ready start
@@ -37,6 +39,7 @@ $(document).ready(function() {
 
 }); 
 // jquery end
+
 </script>
 
 </head>
@@ -82,15 +85,29 @@ $(document).ready(function() {
                 </div>
             </form> <!-- search-wrap .end// -->
         </div> <!-- col.// -->
+        {% if user.id is None %}
         <div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3">
                     <div class="d-flex justify-content-end mb-3 mb-lg-0">
                         <div class="widget-header">
                             <small class="title text-muted">Welcome guest!</small>
                             <div> 
-                                <a href="./signin.html">Sign in</a> <span class="dark-transp"> | </span>
-                                <a href="./register.html"> Register</a>
+                                <a href="{% url "login" %}">Sign in</a> <span class="dark-transp"> | </span>
+                                <a href="{% url "regester" %}"> Register</a>
                             </div>
                         </div>
+
+        {% else %}                
+       <div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3">
+                    <div class="d-flex justify-content-end mb-3 mb-lg-0">
+                        <div class="widget-header">
+                            <small class="title text-muted">Welcome guest!</small>
+                            <div> 
+                                <a href="{% url "logout" %}">Logout</a> <span class="dark-transp"> | </span>
+                                <a href="./register.html"> Dachpourd</a>
+                            </div>
+                        </div>
+                        
+        {% endif %}                 
                         <a href="{% url "cart:cart_details" %}" class="widget-header pl-3 ml-3">
                             <div class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></div>
                             <span class="badge badge-pill badge-danger notify">{{cart_count}}</span>
